@@ -106,7 +106,7 @@ module.exports.postLogin = (req, res) => {
           }
         );
 
-        console.log("Login Token Generated");
+        console.log(`${email_id} is logged In!`);
 
         // const cookieOptions = {
         //   expires: new Date(

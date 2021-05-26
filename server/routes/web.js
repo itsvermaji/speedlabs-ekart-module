@@ -1,6 +1,6 @@
 const express = require("express");
 const instituteAuth = require("../app/http/controllers/instituteAuth");
-const { products } = require("../app/http/controllers/Products");
+const { products, createProduct } = require("../app/http/controllers/products");
 const studentAuth = require("../app/http/controllers/studentAuth");
 const { verifyInstitute } = require("../app/http/middlewares/verifyInstitute");
 const router = express.Router();
@@ -21,7 +21,8 @@ router.post("/admin/register", instituteAuth.postRegister);
 router.get("/admin/login", instituteAuth.login);
 router.post("/admin/login", instituteAuth.postLogin);
 
-// Protected Route
+// Products Route
 router.get("/admin/products", verifyInstitute, products);
+router.post("/admin/products", verifyInstitute, createProduct);
 
 module.exports = router;

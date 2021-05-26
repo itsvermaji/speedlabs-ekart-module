@@ -24,6 +24,10 @@ require("./app/config/dbConnection");
 // App Routes
 app.use("/api", require("./routes/web"));
 
+// app.get('/', (req, res) => {
+//   req.
+// })
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`App is listening on port: ${PORT}`);

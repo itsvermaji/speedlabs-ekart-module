@@ -1,0 +1,3 @@
+Points to Remember
+1. Check for the keywords in package.json.
+2. Add Institute Hash in each table for speed.
