@@ -55,7 +55,7 @@ exports.createProduct = (req, res) => {
         });
       }
 
-      var product = {
+      const product = {
         issued_by: req.user.id,
         image_name,
         image_url,
@@ -75,10 +75,15 @@ exports.createProduct = (req, res) => {
         course_rating,
         tot_ratings,
       };
+
+      // console.log(product);
+
       db.query("INSERT INTO products SET ?", product, (err, results) => {
         if (err) {
           console.log(err);
-          return res.json({ msg: "db error Occured!" });
+          return res.json({
+            msg: "db error Occured while creating a product!",
+          });
         }
 
         db.query(

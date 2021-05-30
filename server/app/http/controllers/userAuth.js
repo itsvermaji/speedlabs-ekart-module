@@ -8,11 +8,12 @@ module.exports.register = (req, res) => {
 };
 
 module.exports.postRegister = (req, res) => {
-  const { name, city, email, password } = req.body;
+  const { user_first_name, user_email, password, user_inst_id, user_location } =
+    req.body;
 
   db.query(
-    "SELECT email FROM institute_details WHERE email = ?",
-    [email],
+    "SELECT user_email FROM user_details WHERE user_email = ?",
+    [user_email],
     async (err, results) => {
       if (err) {
         console.log("Error Occured!");
@@ -23,40 +24,41 @@ module.exports.postRegister = (req, res) => {
         return res.json({ msg: "Email is already Registered!" });
       }
 
-      const institute_hash = md5(password);
+      const userObj = {
+        user_first_name,
+        user_email,
+        user_hash: md5(password),
+        user_inst_id,
+        user_location,
+      };
 
-      console.log(name, city, email, institute_hash);
-      db.query(
-        "INSERT INTO institute_details SET ?",
-        {
-          name: name,
-          city: city,
-          email: email,
-          institute_hash: institute_hash,
-        },
-        (err, results) => {
-          if (err) {
-            console.log(err);
-            return res.json(err);
-          }
+      // Verify whether the institute exists
+      if (user_inst_id == 123) {
+        console.log("Institute not exists!");
+      }
 
-          // If Results show the id
-          db.query(
-            "SELECT * FROM institute_details WHERE id = ?",
-            [`${results.insertId}`],
-            (err, data) => {
-              if (err) {
-                res.json(err);
-              }
-
-              // Institute Data is displayed after successfull registration.
-              return res.json(data);
-            }
-          );
-
-          // return res.json("User is inserted at id: " + results.insertId);
+      db.query("INSERT INTO user_details SET ?", userObj, (err, results) => {
+        if (err) {
+          console.log(err);
+          return res.json(err);
         }
-      );
+
+        // If Results show the id
+        db.query(
+          "SELECT * FROM user_details WHERE user_id = ?",
+          [`${results.insertId}`],
+          (err, data) => {
+            if (err) {
+              res.json(err);
+            }
+
+            // Institute Data is displayed after successfull registration.
+            return res.json(data);
+          }
+        );
+
+        // return res.json("User is inserted at id: " + results.insertId);
+      });
     }
   );
 

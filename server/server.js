@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require("path");
-const cookieParser = require("cookie-parser");
 
 // Express Application
 const app = express();
@@ -15,20 +14,16 @@ app.use(express.static(publicDirectory));
 // Express Parser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-// Cookie Parser
-app.use(cookieParser());
 
 // Database Connection
 require("./app/config/dbConnection");
 
 // App Routes
-app.use("/api", require("./routes/web"));
+const { appRoutes } = require("./routes/index");
+app.use("/api", appRoutes);
 
-// app.get('/', (req, res) => {
-//   req.
-// })
-
-const PORT = 3000;
+// Port Settings
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`App is listening on port: ${PORT}`);
 });

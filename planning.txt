@@ -1,3 +1,12 @@
 Points to Remember
 1. Check for the keywords in package.json.
-2. Add Institute Hash in each table for speed.
+2. Right now the tot_students attribute in product section is filled by admin, later on it will be dynamically handled.
+
+COUPONS Logic: 
+Admin: 
+Creates a coupon for specific users{ for specific user_id } along with discount{both percent and amount} and issued by which institute, { with specific duration}. 
+coupons carry a status which shows expired.
+
+
+TODO: Visualization using template engine(pug or ejs)
+admin side, student side, add to cart, payment gateway, coupon discount, access of purchased product.
