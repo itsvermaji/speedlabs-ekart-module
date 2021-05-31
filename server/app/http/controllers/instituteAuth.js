@@ -113,6 +113,7 @@ module.exports.postLogin = (req, res) => {
 
         // res.cookie("jwt", token, cookieOptions);
         req.body.token = token;
+
         console.log(token);
         return res.json(token);
       }

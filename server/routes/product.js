@@ -1,16 +1,30 @@
 const express = require("express");
 const router = express.Router();
 
-const { products, createProduct } = require("../app/http/controllers/products");
+const {
+  products,
+  createProduct,
+  productDetails,
+  productUpdate,
+  deleteProduct,
+} = require("../app/http/controllers/products");
 const { verifyInstitute } = require("../app/http/middlewares/verifyInstitute");
 
-// Products Route
-// View Product
-router.get("/allproducts", verifyInstitute, products);
-// Create Product
+// !Products Route
+
+// ?View Product
+router.get("/allproducts", products);
+
+// ?Create Product
 router.post("/createproduct", verifyInstitute, createProduct);
-// router.post("/createproduct", (req, res) => {
-//   return res.json({ msg: "create product" });
-// });
+
+// ?Product Details
+router.get("/:id", productDetails);
+
+// ?Update Product
+router.put("/:id/update", verifyInstitute, productUpdate);
+
+// ?Delete Product
+router.delete("/:id/delete", verifyInstitute, deleteProduct);
 
 exports.productRoutes = router;

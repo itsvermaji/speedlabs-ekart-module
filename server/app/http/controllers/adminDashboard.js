@@ -7,7 +7,6 @@ exports.dashboard = (req, res) => {
     if (!req.user) {
       return res.json({
         msg: `Good Afternoon Guest, Welcome to the Dashboard`,
-        name: "Guest",
         time: new Date().toLocaleTimeString(),
         date: new Date().toLocaleDateString(),
       });
@@ -18,7 +17,6 @@ exports.dashboard = (req, res) => {
         (err, results) => {
           return res.json({
             msg: `Good Afternoon ${results[0].name}, Welcome to your Dashboard`,
-            name: results[0].name,
             time: new Date().toLocaleTimeString(),
             date: new Date().toLocaleDateString(),
           });

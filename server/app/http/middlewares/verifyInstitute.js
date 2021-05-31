@@ -9,7 +9,7 @@ exports.verifyInstitute = (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
-    console.log(`${req.user.id} is logged In`);
+    console.log(`${req.user} is logged In`);
 
     next();
   } catch (err) {

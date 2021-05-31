@@ -98,3 +98,136 @@ exports.createProduct = (req, res) => {
     }
   );
 };
+
+exports.productDetails = (req, res) => {
+  db.query(
+    "SELECT * FROM products WHERE id = ?",
+    req.params.id,
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(400)
+          .json({ msg: "An error occured while fetching product Details" });
+      }
+
+      return res.status(200).json(results);
+    }
+  );
+};
+
+exports.productUpdate = (req, res) => {
+  const {
+    image_name,
+    image_url,
+    product_name,
+    creator_name,
+    category,
+    sub_category,
+    label,
+    status,
+    tot_students,
+    description,
+    you_will_learn,
+    this_includes,
+    pre_requisites,
+    set_currency,
+    price,
+    course_rating,
+    tot_ratings,
+  } = req.body;
+
+  // const productUpdate = {
+  //   issued_by: req.user.id,
+  //   image_name,
+  //   image_url,
+  //   product_name,
+  //   creator_name,
+  //   category,
+  //   sub_category,
+  //   label,
+  //   status,
+  //   tot_students,
+  //   description,
+  //   you_will_learn,
+  //   this_includes,
+  //   pre_requisites,
+  //   set_currency,
+  //   price,
+  //   course_rating,
+  //   tot_ratings,
+  // };
+
+  let sql_string =
+    "UPDATE products SET issued_by = ?, image_name = ?, image_url = ?, product_name = ?, creator_name = ?, category = ?, sub_category = ?, label = ?, status = ?, tot_students = ?, description = ?, you_will_learn = ?, this_includes = ?, pre_requisites = ?, set_currency = ?, price = ?, course_rating = ?, tot_ratings WHERE id = ?";
+  let string_values = [
+    req.user.id,
+    image_name,
+    image_url,
+    product_name,
+    creator_name,
+    category,
+    sub_category,
+    label,
+    status,
+    tot_students,
+    description,
+    you_will_learn,
+    this_includes,
+    pre_requisites,
+    set_currency,
+    price,
+    course_rating,
+    tot_ratings,
+    req.params.id,
+  ];
+
+  db.query(sql_string, string_values, (err, results) => {
+    if (err) {
+      console.log(err);
+      return res.json({ msg: "An Error occured while updating" });
+    }
+
+    return res.status(200).json(results);
+  });
+};
+
+exports.deleteProduct = (req, res) => {
+  db.query(
+    "SELECT * FROM products WHERE id = ? and issued_by = ?",
+    [req.params.id, req.user.id],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        return res.json({
+          msg: "An Error occured while deleting the product!",
+        });
+      }
+
+      if (results == 0) {
+        return res.json({
+          msg: "You are not authorized to delete this product",
+        });
+      }
+
+      db.query(
+        "DELETE FROM products WHERE id = ?",
+        req.params.id,
+        (err, results) => {
+          if (err) {
+            console.log(err);
+            return res
+              .status(400)
+              .json({ msg: "An error occured while deleting!" });
+          }
+
+          console.log(results);
+
+          return res.status(200).json({
+            msg: `product ${req.params.id} published by ${req.user.id} is successfully deleted!`,
+          });
+        }
+      );
+    }
+  );
+};
