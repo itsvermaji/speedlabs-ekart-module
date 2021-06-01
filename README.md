@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://www.speedlabs.in/">
+  <a href="https://media-exp1.licdn.com/dms/image/C4D0BAQEwlx7BEIb5hA/company-logo_200_200/0/1609929978082?e=1630540800&v=beta&t=iAs3wDix_XGKNhfMUi708JCxSSUo9wBeVn0yHqqWlms">
     <img src="https://www.speedlabs.in/images/logo.svg" alt="Logo" width="80" height="80">
   </a>
 
