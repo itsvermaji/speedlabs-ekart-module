@@ -10,7 +10,7 @@
   <p align="center">
     The e-kart module for speedlabs!
     <br />
-    <a href="https://www.speedlabs.in/"><strong>about us</strong></a>
+    <a href="https://www.speedlabs.in/"><strong>About Speedlabs</strong></a>
     <br />
   </p>
 </p>
@@ -49,7 +49,7 @@ We used following technologies and frameworks for the development of this module
 4. Start your react server
 
    ```sh
-   npm run
+   npm start
    ```
 
 5. Go to server directory
