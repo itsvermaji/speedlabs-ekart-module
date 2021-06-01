@@ -4,8 +4,15 @@ Points to Remember
 
 COUPONS Logic: 
 Admin: 
-Creates a coupon for specific users{ for specific user_id } along with discount{both percent and amount} and issued by which institute, { with specific duration}. 
-coupons carry a status which shows expired.
+1. user_id should be among institute's students.
+2. Valid from date should not exceed valid till date.
+3. valid from date should not be prior to the current date of creating coupon.
+4. Valid till should be atleast more than current date.
+5. Capitalize the coupon while creating.
+6. Discount percent and discount_amt can't be applied at the same time.
+7. Discount amount cannot exceed the product_discounted price. 
+8. Coupon can only be redeemed for once for particular user.
+FILTER: for deleting expired coupons.
 
 
 TODO: Visualization using template engine(pug or ejs)

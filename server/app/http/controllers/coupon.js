@@ -4,7 +4,6 @@ exports.allCoupons = (req, res) => {
   console.log("This shows all the coupons!");
 
   //   console.log(req.user);
-  //   // console.log(req.cookies);
   //   console.log(req.user.id);
 
   //   db.query(
@@ -23,63 +22,36 @@ exports.allCoupons = (req, res) => {
 
 exports.createCoupon = (req, res) => {
   // const { image_name, image_url } = req.body;
-  console.log("This route creates the coupon!");
+  console.log("Coupon validated Successfully!");
 
-  // db.query(
-  //   "SELECT * FROM products WHERE product_name = ? AND issued_by = ?",
-  //   [product_name, req.user.id],
-  //   async (err, results) => {
-  //     if (err) {
-  //       console.log("Error Occured!");
-  //       return res.json({ msg: err });
-  //     }
+  const couponObj = {
+    coupon_code: req.body.coupon_code,
+    user_id: req.body.user_id,
+    institute_id: req.user.id,
+    description: req.body.description,
+    discount_percent: req.body.discount_percent,
+    discount_amount: req.body.discount_amount,
+    valid_from: req.body.valid_from,
+    valid_till: req.body.valid_till,
+    terms_and_conditions: req.body.terms_and_conditions,
+  };
 
-  //     if (results.length > 0) {
-  //       return res.json({
-  //         msg: "A Product Already exists by this name! Please try with different name",
-  //       });
-  //     }
+  db.query("INSERT INTO coupons SET ?", couponObj, (err, results) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        msg: "Internal Server error, error while creating the product!",
+      });
+    }
 
-  //     const product = {
-  //       issued_by: req.user.id,
-  //       image_name,
-  //       image_url,
-  //       product_name,
-  //       creator_name,
-  //       category,
-  //       sub_category,
-  //       label,
-  //       status,
-  //       tot_students,
-  //       description,
-  //       you_will_learn,
-  //       this_includes,
-  //       pre_requisites,
-  //       set_currency,
-  //       price,
-  //       course_rating,
-  //       tot_ratings,
-  //     };
+    db.query(
+      "SELECT * FROM coupons WHERE id = ?",
+      results.insertId,
+      (err, results) => {
+        console.log(results);
+      }
+    );
 
-  //     // console.log(product);
-
-  //     db.query("INSERT INTO products SET ?", product, (err, results) => {
-  //       if (err) {
-  //         console.log(err);
-  //         return res.json({
-  //           msg: "db error Occured while creating a product!",
-  //         });
-  //       }
-
-  //       db.query(
-  //         "SELECT * FROM products WHERE id = ?",
-  //         results.insertId,
-  //         (err, productData) => {
-  //           console.log("Product is Added to the database!");
-  //           return res.json(productData);
-  //         }
-  //       );
-  //     });
-  //   }
-  // );
+    return res.status(200).json({ msg: "Coupon created Successfully!" });
+  });
 };
