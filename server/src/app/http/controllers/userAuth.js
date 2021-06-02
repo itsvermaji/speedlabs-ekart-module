@@ -34,31 +34,48 @@ module.exports.postRegister = (req, res) => {
 
       // Verify whether the institute exists
       if (user_inst_id == 123) {
-        console.log("Institute not exists!");
+        console.log("Bad request!");
       }
 
-      db.query("INSERT INTO user_details SET ?", userObj, (err, results) => {
-        if (err) {
-          console.log(err);
-          return res.json(err);
-        }
+      db.query(
+        "SELECT * FROM institute_details WHERE id = ?",
+        user_inst_id,
+        async (err, results) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).json({ msg: "Internal Server error" });
+          } else if (results.length == 0) {
+            console.log("Invalid institute id is entered!");
+            return res.status(400).json({ msg: "Bad request!" });
+          } else {
+            db.query(
+              "INSERT INTO user_details SET ?",
+              userObj,
+              (err, results) => {
+                if (err) {
+                  console.log(err);
+                  return res.status(500).json({ msg: "Internal Server error" });
+                }
 
-        // If Results show the id
-        db.query(
-          "SELECT * FROM user_details WHERE user_id = ?",
-          [`${results.insertId}`],
-          (err, data) => {
-            if (err) {
-              res.json(err);
-            }
+                // If Results show the id
+                const userDetails = db.query(
+                  "SELECT * FROM user_details WHERE user_id = ?",
+                  [`${results.insertId}`],
+                  (err, rows) => {
+                    if (err) {
+                      console.log(err);
+                      res.json(err);
+                    }
 
-            // Institute Data is displayed after successfull registration.
-            return res.json(data);
+                    console.log(rows[0]);
+                    return res.json({ msg: "User successfully registered!" });
+                  }
+                );
+              }
+            );
           }
-        );
-
-        // return res.json("User is inserted at id: " + results.insertId);
-      });
+        }
+      );
     }
   );
 
@@ -73,31 +90,33 @@ module.exports.login = (req, res) => {
 
 module.exports.postLogin = (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { user_email, password } = req.body;
 
-    if (!email || !password) {
+    if (!user_email || !password) {
       return res
         .status(400)
         .json({ msg: "Please Fill all the required Fields!" });
     }
 
+    // Check if the entered user email exists
     db.query(
-      "SELECT * FROM institute_details WHERE email = ?",
-      [email],
-      async (err, results) => {
+      "SELECT * FROM user_details WHERE user_email = ?",
+      [user_email],
+      (err, rows) => {
         if (err) {
-          return res.json(err);
+          console.log(err);
+          return res.json({ msg: "An error occured!" });
         }
 
-        if (results.length < 1 || md5(password) != results[0].institute_hash) {
+        if (rows.length == 0 || md5(password) != rows[0].user_hash) {
           console.log("Invalid Email or Password!");
           return res.status(401).json({ msg: "Invalid Email or Password" });
         }
 
         // After Successful Login, Now Generate a Token
 
-        const token = await jwt.sign(
-          { id: results[0].id },
+        const token = jwt.sign(
+          { id: rows[0].user_id },
           process.env.JWT_SECRET,
           {
             expiresIn: process.env.JWT_EXPIRES_IN,
@@ -106,20 +125,14 @@ module.exports.postLogin = (req, res) => {
 
         console.log("Login Token Generated");
 
-        // const cookieOptions = {
-        //   expires: new Date(
-        //     Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 3600
-        //   ),
-        //   httpOnly: true,
-        // };
-
-        // res.cookie("jwt", token, cookieOptions);
         req.body.token = token;
+
         console.log(token);
         return res.json(token);
       }
     );
   } catch (err) {
     console.log(err);
+    return res.status(400).json({ msg: "An error occured while logging in!" });
   }
 };

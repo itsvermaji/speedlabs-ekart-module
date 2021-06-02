@@ -1,23 +1,17 @@
 const db = require("../../config/dbConnection");
 
-exports.allCoupons = (req, res) => {
-  console.log("This shows all the coupons!");
-
-  //   console.log(req.user);
-  //   console.log(req.user.id);
-
-  //   db.query(
-  //     "SELECT * FROM products WHERE issued_by = ?",
-  //     req.user.id,
-  //     (err, results) => {
-  //       if (err) {
-  //         console.log(err);
-  //         return res.json({ msg: "Bad Request!" });
-  //       }
-
-  //       return res.json(results);
-  //     }
-  //   );
+exports.allCoupons = async (req, res) => {
+  db.query(
+    "SELECT * FROM coupons WHERE institute_id = ?",
+    req.user.id,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json({ msg: "An error occured!" });
+      }
+      return res.status(200).json(rows);
+    }
+  );
 };
 
 exports.createCoupon = (req, res) => {

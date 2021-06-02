@@ -11,11 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/joi-date": "^2.0.1",
-    "cookie-parser": "^1.4.5",
+    "crypto-js": "^4.0.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "express-handlebars": "^5.3.2",
-    "hbs": "^4.1.2",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.3.0",

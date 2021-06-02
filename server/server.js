@@ -16,10 +16,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Database Connection
-require("./app/config/dbConnection");
+require("./src/app/config/dbConnection");
+console.log(process.env.CRYPTO_SECRET_KEY);
 
 // App Routes
-const { appRoutes } = require("./routes/index");
+const appRoutes = require("./src/routes/index");
 app.use("/api", appRoutes);
 
 // Port Settings

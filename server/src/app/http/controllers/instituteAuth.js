@@ -23,8 +23,6 @@ module.exports.postRegister = (req, res) => {
         return res.json({ msg: "Email is already Registered!" });
       }
 
-      const institute_hash = md5(password);
-
       console.log(name, city, email, institute_hash);
       db.query(
         "INSERT INTO institute_details SET ?",
@@ -32,7 +30,7 @@ module.exports.postRegister = (req, res) => {
           name: name,
           city: city,
           email: email,
-          institute_hash: institute_hash,
+          institute_hash: md5(password),
         },
         (err, results) => {
           if (err) {
@@ -103,22 +101,12 @@ module.exports.postLogin = (req, res) => {
         );
 
         console.log("Login Token Generated");
-
-        // const cookieOptions = {
-        //   expires: new Date(
-        //     Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 3600
-        //   ),
-        //   httpOnly: true,
-        // };
-
-        // res.cookie("jwt", token, cookieOptions);
         req.body.token = token;
-
-        console.log(token);
         return res.json(token);
       }
     );
   } catch (err) {
     console.log(err);
+    return res.status(400).json({ msg: "An error occured while logging in!" });
   }
 };

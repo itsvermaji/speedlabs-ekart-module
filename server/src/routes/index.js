@@ -28,4 +28,4 @@ router.use("/admin/coupon", couponRoutes);
 // ?Categories
 router.use("/admin/category", categoryRoutes);
 
-module.exports.appRoutes = router;
+module.exports = router;
