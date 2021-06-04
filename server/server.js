@@ -17,7 +17,6 @@ app.use(express.json());
 
 // Database Connection
 require("./src/app/config/dbConnection");
-console.log(process.env.CRYPTO_SECRET_KEY);
 
 // App Routes
 const appRoutes = require("./src/routes/index");

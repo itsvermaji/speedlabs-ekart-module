@@ -1,0 +1,41 @@
+Points to Remember
+1. Check for the keywords in package.json.
+2. Right now the tot_students attribute in product section is filled by admin, later on it will be dynamically handled.
+
+USER_AUTH: 
+1. If users insert the user_inst_id which is not in the database, respond that as a bad request.
+2. Then, the user details are stored to the database.
+3. Simultaneously, the unique cart_id for that user is also stored in the database.
+
+DELETE_USER:
+1. Before deleting the user, clear all its purchases, carts, cart_contents.
+2. Then delete user.
+
+
+COUPONS Logic:
+Admin:
+1. user_id should be among institute's students.
+2. Valid from date should not exceed valid till date.
+3. valid from date should not be prior to the current date of creating coupon.
+4. Valid till should be atleast more than current date.
+5. Capitalize the coupon while creating.
+6. Discount percent and discount_amt can't be applied at the same time.
+7. Discount amount cannot exceed the product_discounted price.
+8. Coupon can only be redeemed for once for particular user.
+9. After a successfull purchase the coupon code will be deleted!
+FILTER: for deleting expired coupons.
+
+CART Logic:
+1. First check if the cart has been created for that user.
+    1.1. Check if the product the user enterd exists in the cart!
+    1.1. If has been add then check if the product has already been added to the cart.
+    1.2. If product has not been added yet, then add the product to the cart_details table.
+2. If cart has not been listed in the user_carts table, 
+    2.1. Then First Create it.
+    2.2. Then Go to point 1.2.
+3. After each add to cart operation check the total price.
+
+
+
+TODO: Visualization using template engine(pug or ejs)
+admin side, student side, add to cart, payment gateway, coupon discount, access of purchased product.

@@ -2,7 +2,7 @@ const db = require("../../config/dbConnection");
 const jwt = require("jsonwebtoken");
 const md5 = require("md5");
 
-// Institute Controllers
+// Student Controllers
 module.exports.register = (req, res) => {
   res.json({ msg: "Get: Institute registration page" });
 };
@@ -33,10 +33,6 @@ module.exports.postRegister = (req, res) => {
       };
 
       // Verify whether the institute exists
-      if (user_inst_id == 123) {
-        console.log("Bad request!");
-      }
-
       db.query(
         "SELECT * FROM institute_details WHERE id = ?",
         user_inst_id,
@@ -58,17 +54,38 @@ module.exports.postRegister = (req, res) => {
                 }
 
                 // If Results show the id
-                const userDetails = db.query(
+                db.query(
                   "SELECT * FROM user_details WHERE user_id = ?",
-                  [`${results.insertId}`],
+                  results.insertId,
                   (err, rows) => {
                     if (err) {
                       console.log(err);
                       res.json(err);
                     }
 
-                    console.log(rows[0]);
-                    return res.json({ msg: "User successfully registered!" });
+                    // Loggin the user created
+                    console.log("User", rows[0], "created successfully");
+
+                    const cartObj = { user_id: results.insertId, total_amt: 0 };
+                    db.query(
+                      "INSERT INTO user_carts SET ?",
+                      cartObj,
+                      (err, row) => {
+                        if (err) {
+                          console.log(err);
+                          return res
+                            .status(500)
+                            .json({ msg: "Internal Server error" });
+                        }
+
+                        console.log(
+                          `Cart Id: ${row.insertId} created successfully!`
+                        );
+                        return res.json({
+                          msg: "User successfully registered!",
+                        });
+                      }
+                    );
                   }
                 );
               }

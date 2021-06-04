@@ -23,7 +23,6 @@ module.exports.postRegister = (req, res) => {
         return res.json({ msg: "Email is already Registered!" });
       }
 
-      console.log(name, city, email, institute_hash);
       db.query(
         "INSERT INTO institute_details SET ?",
         {
@@ -48,7 +47,8 @@ module.exports.postRegister = (req, res) => {
               }
 
               // Institute Data is displayed after successfull registration.
-              return res.json(data);
+              console.log("Institute Registration: ", data);
+              return res.json({ msg: "Institute Registration Successfull!" });
             }
           );
 

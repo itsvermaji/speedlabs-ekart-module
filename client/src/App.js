@@ -1,12 +1,12 @@
-import React from 'react';
-import './App.css';
-import Navbar from './components/Navbar';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Courses from './pages/Courses';
-import Products from './pages/Products';
-import MakeCourses from './components/MakeCourses';
-import Course from './pages/Course';
+import React from "react";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./Pages/Home";
+import Courses from "./Pages/Courses";
+import Products from "./Pages/Products";
+import MakeCourses from "./components/MakeCourses";
+import Course from "./Pages/Course";
 
 function App() {
   return (

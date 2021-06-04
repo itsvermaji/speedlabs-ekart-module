@@ -3,23 +3,33 @@ const {
   addItemToCart,
   getCartItems,
   emptyCart,
+  removeItemFromCart,
+  removeCoupon,
+  applyCoupon,
 } = require("../app/http/controllers/cart");
 const router = express.Router();
 
 const { verifyUser } = require("../app/http/middlewares/verifyUser");
 
-router.post("/", cartController.addItemToCart);
-router.get("/", cartController.getCart);
-router.delete("/empty-cart", cartController.emptyCart);
-
-// !Coupon Routes
 // ? Get Cart Items
 router.get("/", verifyUser, getCartItems);
 
+// ? Remove Items from Cart
+router.get("/:id/remove", verifyUser, removeItemFromCart);
+
+// ? Redeem Coupon Code
+router.get("/:id/couponcode", verifyUser, applyCoupon);
+
+// ? Remove Coupon Code
+router.get("/:id/removecoupon", verifyUser, removeCoupon);
+
 // ? Add to Cart
-router.post("/", verifyUser, addItemToCart);
+router.post("/addtocart", verifyUser, addItemToCart);
+
+// ? Remove Item from Cart
+router.put("/remove", verifyUser, removeItemFromCart);
 
 // ? Empty the Cart category
-router.delete("/addtocart", verifyUser, emptyCart);
+router.delete("/emptycart", verifyUser, emptyCart);
 
 module.exports = router;

@@ -1,6 +1,6 @@
-import React from 'react';
-import Courses from '../pages/Courses';
-import { CssBaseline, Container, Paper, Box } from '@material-ui/core';
+import React from "react";
+import Courses from "../Pages/Courses";
+import { CssBaseline, Container, Paper, Box } from "@material-ui/core";
 
 const MakeCourses = () => {
   return (

@@ -81,4 +81,5 @@ Saqlain - [@linkedin](https://www.linkedin.com/in/saqlainmkhan/)
 
 Deepak Verma - [@linkedin](https://www.linkedin.com/in/deepak-verma-6a5083189/) - deepakverma.pb34@gmail.com - 2018ucp1173@mnit.ac.in
 
-<h3 align="center">Project Link: [https://github.com/itsvermaji/speedlabs-ekart-module](https://github.com/itsvermaji/speedlabs-ekart-module)</h3>
+<h3 align="center">Project Link</h3>
+<p align="center">[https://github.com/itsvermaji/speedlabs-ekart-module](https://github.com/itsvermaji/speedlabs-ekart-module)]</p>

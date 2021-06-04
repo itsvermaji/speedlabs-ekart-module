@@ -13,19 +13,25 @@ const adminDashboard = require("./admin/dashboard");
 const { productRoutes } = require("./product");
 const couponRoutes = require("./coupon");
 const categoryRoutes = require("./category");
+const cartRoutes = require("./cart");
 
 // ! Institute Admin Routes
-// ?Auth
+// ?Auth Routes
 router.use("/admin/auth", adminAuth);
-router.use("/admin/product", productRoutes);
 
 // ?Dashboard
 router.use("/admin/dashboard", adminDashboard);
+
+// ?Product Routes
+router.use("/admin/product", productRoutes);
 
 // ?Coupons
 router.use("/admin/coupon", couponRoutes);
 
 // ?Categories
 router.use("/admin/category", categoryRoutes);
+
+// ?Cart Routes
+router.use("/user/cart", cartRoutes);
 
 module.exports = router;
