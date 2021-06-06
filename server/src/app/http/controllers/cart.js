@@ -8,7 +8,7 @@ exports.getCartItems = async (req, res) => {
   //   "SELECT user_carts.id as cart_id, user_id, product_id, coupon_code, net_price FROM user_carts RIGHT JOIN cart_contents ON user_carts.id = cart_contents.cart_id WHERE user_id = ? ORDER by user_id";
 
   // const sql =
-  // "SELECT * FROM user_details LEFT JOIN products ON user_details.user_inst_id = products.issued_by WHERE user_id = ? AND products.id = ?";
+  // "SELECT * FROM user_detail LEFT JOIN products ON user_detail.user_inst_id = products.issued_by WHERE user_id = ? AND products.id = ?";
 
   // product_name, product_net price, product_issuedby, coupon_code,
 
@@ -79,7 +79,7 @@ exports.addItemToCart = (req, res) => {
 
       // Then check if the product is already into the cart!
       const sql =
-        "SELECT * FROM user_details LEFT JOIN products ON user_details.user_inst_id = products.issued_by WHERE user_id = ? AND products.id = ?";
+        "SELECT * FROM user_detail LEFT JOIN products ON user_detail.user_inst_id = products.issued_by WHERE user_id = ? AND products.id = ?";
 
       db.query(sql, [req.user.id, product_id], (err, rows) => {
         if (err) {

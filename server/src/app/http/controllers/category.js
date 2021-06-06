@@ -97,3 +97,24 @@ exports.allCategories = (req, res) => {
     }
   );
 };
+
+exports.deleteCategory = (req, res) => {
+  const category_id = req.params.id;
+
+  let sql = `DELETE FROM categories WHERE id = ${category_id} AND created_by = ${req.user.id}`;
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(400)
+        .json({ msg: "An error occured while deleting category!" });
+    }
+
+    if (results.affectedRows < 1) {
+      return res.status(400).json({ msg: "Please try again!" });
+    }
+
+    console.log(results);
+    return res.status(200).json({ msg: "Deleted Successfully!" });
+  });
+};

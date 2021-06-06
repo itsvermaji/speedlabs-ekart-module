@@ -4,16 +4,19 @@ const router = express.Router();
 const {
   allCategories,
   createCategory,
+  deleteCategory,
 } = require("../app/http/controllers/category");
 const { verifyInstitute } = require("../app/http/middlewares/verifyInstitute");
 
 // !Coupon Routes
+
 // ? View categories
 router.get("/allcategories", verifyInstitute, allCategories);
+
 // ? Create category
 router.post("/create", verifyInstitute, createCategory);
-// router.post("/createproduct", (req, res) => {
-//   return res.json({ msg: "create product" });
-// });
+
+// ? Delete Category
+router.delete("/:id/delete", verifyInstitute, deleteCategory);
 
 module.exports = router;

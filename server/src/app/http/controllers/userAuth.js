@@ -12,7 +12,7 @@ module.exports.postRegister = (req, res) => {
     req.body;
 
   db.query(
-    "SELECT user_email FROM user_details WHERE user_email = ?",
+    "SELECT user_email FROM user_detail WHERE user_email = ?",
     [user_email],
     async (err, results) => {
       if (err) {
@@ -45,7 +45,7 @@ module.exports.postRegister = (req, res) => {
             return res.status(400).json({ msg: "Bad request!" });
           } else {
             db.query(
-              "INSERT INTO user_details SET ?",
+              "INSERT INTO user_detail SET ?",
               userObj,
               (err, results) => {
                 if (err) {
@@ -55,7 +55,7 @@ module.exports.postRegister = (req, res) => {
 
                 // If Results show the id
                 db.query(
-                  "SELECT * FROM user_details WHERE user_id = ?",
+                  "SELECT * FROM user_detail WHERE user_id = ?",
                   results.insertId,
                   (err, rows) => {
                     if (err) {
@@ -117,7 +117,7 @@ module.exports.postLogin = (req, res) => {
 
     // Check if the entered user email exists
     db.query(
-      "SELECT * FROM user_details WHERE user_email = ?",
+      "SELECT * FROM user_detail WHERE user_email = ?",
       [user_email],
       (err, rows) => {
         if (err) {

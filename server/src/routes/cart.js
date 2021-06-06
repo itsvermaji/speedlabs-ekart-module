@@ -26,9 +26,6 @@ router.get("/:id/removecoupon", verifyUser, removeCoupon);
 // ? Add to Cart
 router.post("/addtocart", verifyUser, addItemToCart);
 
-// ? Remove Item from Cart
-router.put("/remove", verifyUser, removeItemFromCart);
-
 // ? Empty the Cart category
 router.delete("/emptycart", verifyUser, emptyCart);
 

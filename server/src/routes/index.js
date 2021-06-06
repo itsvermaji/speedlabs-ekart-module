@@ -16,6 +16,11 @@ const categoryRoutes = require("./category");
 const cartRoutes = require("./cart");
 
 // ! Institute Admin Routes
+// ?Testing Routes
+router.get("/test", (req, res) => {
+  return res.status(200).json({ msg: "your got this response!" });
+});
+
 // ?Auth Routes
 router.use("/admin/auth", adminAuth);
 

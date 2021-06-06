@@ -4,11 +4,12 @@ const db = require("../../config/dbConnection");
 module.exports.validateCoupon = (joiSchema) => {
   return (req, res, next) => {
     const data = {
+      coupon_quantity: req.body.coupon_quantity,
       coupon_code: req.body.coupon_code,
-      user_id: req.body.user_id,
+      on_course_id: req.body.on_course_id,
       description: req.body.description,
+      label: req.body.label,
       discount_percent: req.body.discount_percent,
-      discount_amount: req.body.discount_amount,
       valid_from: req.body.valid_from,
       valid_till: req.body.valid_till,
       terms_and_conditions: req.body.terms_and_conditions,
@@ -20,8 +21,8 @@ module.exports.validateCoupon = (joiSchema) => {
 
     if (isValid) {
       db.query(
-        "SELECT * FROM user_details WHERE user_id = ? AND user_inst_id = ?",
-        [data.user_id, req.user.id],
+        "SELECT * FROM products WHERE id = ? AND issued_by = ?",
+        [data.on_course_id, req.user.id],
         (err, results) => {
           if (err) {
             console.log(err);
@@ -33,8 +34,9 @@ module.exports.validateCoupon = (joiSchema) => {
           if (results == 0) {
             return res
               .status(400)
-              .json({ msg: "You can't create coupon for this user!" });
+              .json({ msg: "You can't create coupon for this proeuct!" });
           } else {
+            console.log(data);
             next();
           }
         }
