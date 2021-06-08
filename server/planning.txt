@@ -35,6 +35,9 @@ CART Logic:
     2.2. Then Go to point 1.2.
 3. After each add to cart operation check the total price.
 
+COUPON REDEEM:
+1. Check if the quantity is greater than 0.
+2. 
 
 
 TODO: Visualization using template engine(pug or ejs)

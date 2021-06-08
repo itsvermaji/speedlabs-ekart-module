@@ -102,7 +102,7 @@ module.exports.postLogin = (req, res) => {
 
         console.log("Login Token Generated");
         req.body.token = token;
-        return res.json(token);
+        return res.json({ token, details: results[0] });
       }
     );
   } catch (err) {

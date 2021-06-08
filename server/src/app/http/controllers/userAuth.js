@@ -64,6 +64,7 @@ module.exports.postRegister = (req, res) => {
                     }
 
                     // Loggin the user created
+                    const user_details = rows[0];
                     console.log("User", rows[0], "created successfully");
 
                     const cartObj = { user_id: results.insertId, total_amt: 0 };
@@ -83,6 +84,7 @@ module.exports.postRegister = (req, res) => {
                         );
                         return res.json({
                           msg: "User successfully registered!",
+                          details: user_details,
                         });
                       }
                     );
@@ -145,7 +147,7 @@ module.exports.postLogin = (req, res) => {
         req.body.token = token;
 
         console.log(token);
-        return res.json(token);
+        return res.json({ token, details: rows[0] });
       }
     );
   } catch (err) {

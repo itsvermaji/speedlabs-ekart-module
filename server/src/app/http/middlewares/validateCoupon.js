@@ -34,7 +34,7 @@ module.exports.validateCoupon = (joiSchema) => {
           if (results == 0) {
             return res
               .status(400)
-              .json({ msg: "You can't create coupon for this proeuct!" });
+              .json({ msg: "You can't create coupon for this product!" });
           } else {
             console.log(data);
             next();
@@ -43,9 +43,10 @@ module.exports.validateCoupon = (joiSchema) => {
       );
     } else {
       console.log(error);
-      return res
-        .status(400)
-        .json({ msg: "Error occured while validating the coupon!" });
+      return res.status(400).json({
+        msg: "Error occured while validating the coupon!",
+        error,
+      });
     }
   };
 };

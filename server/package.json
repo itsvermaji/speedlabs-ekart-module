@@ -11,7 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/joi-date": "^2.0.1",
-    "crypto-js": "^4.0.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "joi": "^17.4.0",

@@ -100,10 +100,12 @@ exports.createProduct = (req, res) => {
 };
 
 exports.productDetails = (req, res) => {
+  const product_id = req.params.id;
+
   db.query(
-    "SELECT * FROM products WHERE id = ?",
-    req.params.id,
-    (err, results) => {
+    "SELECT * FROM products WHERE id = ? AND issued_by = ?",
+    [product_id, req.user.id],
+    (err, rows) => {
       if (err) {
         console.log(err);
         return res
@@ -111,81 +113,50 @@ exports.productDetails = (req, res) => {
           .json({ msg: "An error occured while fetching product Details" });
       }
 
-      return res.status(200).json(results);
+      if (rows.length < 1) {
+        return res.status(400).json({ msg: "There are no such products!" });
+      }
+
+      return res.status(200).json(rows);
     }
   );
 };
 
 exports.productUpdate = (req, res) => {
-  const {
-    image_name,
-    image_url,
-    product_name,
-    creator_name,
-    category,
-    sub_category,
-    label,
-    status,
-    tot_students,
-    description,
-    you_will_learn,
-    this_includes,
-    pre_requisites,
-    set_currency,
-    price,
-    course_rating,
-    tot_ratings,
-  } = req.body;
+  const product_id = req.params.id;
 
-  // const productUpdate = {
-  //   issued_by: req.user.id,
-  //   image_name,
-  //   image_url,
-  //   product_name,
-  //   creator_name,
-  //   category,
-  //   sub_category,
-  //   label,
-  //   status,
-  //   tot_students,
-  //   description,
-  //   you_will_learn,
-  //   this_includes,
-  //   pre_requisites,
-  //   set_currency,
-  //   price,
-  //   course_rating,
-  //   tot_ratings,
-  // };
+  const productObj = {
+    image_name: req.body.image_name,
+    image_url: req.body.image_url,
+    product_name: req.body.product_name,
+    creator_name: req.body.creator_name,
+    category: req.body.category,
+    sub_category: req.body.sub_category,
+    label: req.body.label,
+    status: req.body.status,
+    tot_students: req.body.tot_students,
+    description: req.body.description,
+    you_will_learn: req.body.you_will_learn,
+    this_includes: req.body.this_includes,
+    pre_requisites: req.body.pre_requisites,
+    set_currency: req.body.set_currency,
+    price: req.body.price,
+    course_rating: req.body.course_rating,
+    tot_ratings: req.body.tot_ratings,
+  };
 
-  let sql_string =
-    "UPDATE products SET issued_by = ?, image_name = ?, image_url = ?, product_name = ?, creator_name = ?, category = ?, sub_category = ?, label = ?, status = ?, tot_students = ?, description = ?, you_will_learn = ?, this_includes = ?, pre_requisites = ?, set_currency = ?, price = ?, course_rating = ?, tot_ratings WHERE id = ?";
-  let string_values = [
-    req.user.id,
-    image_name,
-    image_url,
-    product_name,
-    creator_name,
-    category,
-    sub_category,
-    label,
-    status,
-    tot_students,
-    description,
-    you_will_learn,
-    this_includes,
-    pre_requisites,
-    set_currency,
-    price,
-    course_rating,
-    tot_ratings,
-    req.params.id,
-  ];
+  const sql = `UPDATE products SET ? WHERE id = ${product_id} AND issued_by = ${req.user.id}`;
 
-  db.query(sql_string, string_values, (err, results) => {
+  db.query(sql, productObj, (err, results) => {
     if (err) {
       console.log(err);
       return res.json({ msg: "An Error occured while updating" });
+    }
+
+    if (results.affectedRows < 1) {
+      return res
+        .status(400)
+        .json({ msg: "Invalid request, please try again!" });
     }
 
     return res.status(200).json(results);
