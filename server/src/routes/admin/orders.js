@@ -1,21 +1,11 @@
 const express = require("express");
-const { applyCoupon } = require("../app/http/controllers/coupon");
 const router = express.Router();
-
-const {
-  products,
-  createProduct,
-  productDetails,
-  productUpdate,
-  deleteProduct,
-  adminMarketplaceRoute,
-  newProducts,
-} = require("../app/http/controllers/products");
-const { verifyInstitute } = require("../app/http/middlewares/verifyInstitute");
 
 // !Products Route
 
-// // Admin Marketplace
+// Student Routes
+
+// Admin Marketplace
 router.get("/marketplace", adminMarketplaceRoute);
 
 // All Admin Products

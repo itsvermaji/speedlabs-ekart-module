@@ -101,7 +101,10 @@ module.exports.postLogin = (req, res) => {
         );
 
         console.log("Login Token Generated");
-        req.body.token = token;
+        // res.cookie("jwt", token, {
+        //   maxAge: 1000 * 60 * 60,
+        //   httpOnly: true,
+        // });
         return res.json({ token, details: results[0] });
       }
     );

@@ -15,6 +15,9 @@ const { joiSchema } = require("../validations/coupon");
 // !Coupon Routes
 // ? View Coupons
 router.get("/allcoupons", verifyInstitute, allCoupons);
+// router.get("/allcoupons", (req, res) => {
+//   console.log("open routes");
+// });
 
 // ? Create Coupon
 router.post(
@@ -37,9 +40,5 @@ router.put(
 
 // ? Delete Coupon
 router.delete("/:id/delete", verifyInstitute, deleteCoupon);
-
-// router.post("/createproduct", (req, res) => {
-//   return res.json({ msg: "create product" });
-// });
 
 module.exports = router;

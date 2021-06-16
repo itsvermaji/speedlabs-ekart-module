@@ -19,6 +19,8 @@ module.exports.validateCoupon = (joiSchema) => {
     const { error } = joiSchema.validate(data);
     const isValid = error == null;
 
+    // Validating dates
+
     if (isValid) {
       db.query(
         "SELECT * FROM products WHERE id = ? AND issued_by = ?",
@@ -35,10 +37,29 @@ module.exports.validateCoupon = (joiSchema) => {
             return res
               .status(400)
               .json({ msg: "You can't create coupon for this product!" });
-          } else {
-            console.log(data);
-            next();
           }
+
+          db.query(
+            "SELECT coupon_code FROM coupons WHERE coupon_code = ? AND institute_id = ?",
+            [data.coupon_code, req.user.id],
+            (err, rows) => {
+              if (err) {
+                console.log(err);
+                return res
+                  .status(400)
+                  .json({ msg: "An internal server error occured!" });
+              }
+
+              if (rows.length > 0) {
+                return res.status(400).json({
+                  msg: "A coupon by this name already exists, please try different name!",
+                });
+              }
+
+              console.log(data);
+              next();
+            }
+          );
         }
       );
     } else {

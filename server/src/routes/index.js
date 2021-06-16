@@ -3,9 +3,18 @@ const router = express.Router();
 
 // ! Student Imports
 const { userAuth } = require("./user.auth");
+const { studentProduct } = require("./studProduct");
+const cartRoutes = require("./cart");
 
 // ! Student Routes
-router.use("/user/auth", userAuth);
+// ? Users auth
+router.use("/users/auth", userAuth);
+
+// ?Cart Routes
+router.use("/users/cart", cartRoutes);
+
+// ?product Students
+router.use("/users/products", studentProduct);
 
 //! Institute Admin Imports
 const { adminAuth } = require("./admin/auth");
@@ -14,7 +23,6 @@ const { productRoutes } = require("./product");
 const studentDetails = require("./student");
 const couponRoutes = require("./coupon");
 const categoryRoutes = require("./category");
-const cartRoutes = require("./cart");
 
 // ! Institute Admin Routes
 // ?Testing Routes
@@ -39,23 +47,5 @@ router.use("/admin/coupon", couponRoutes);
 
 // ?Categories
 router.use("/admin/category", categoryRoutes);
-
-// ?Cart Routes
-router.use("/user/cart", cartRoutes);
-
-const db = require("../app/config/dbConnection");
-
-router.get("/public/url", (req, res) => {
-  db.query("SELECT * FROM products", (err, rows) => {
-    if (err) {
-      return res.status(400).json({ msg: "An error occured!" });
-    }
-
-    if (rows.length < 1) {
-      return res.status(400).json({ msg: "No products!" });
-    }
-    return res.status(200).json(rows);
-  });
-});
 
 module.exports = router;

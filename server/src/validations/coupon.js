@@ -9,11 +9,16 @@ const schema = Joi.object({
   description: Joi.string().required(),
   label: Joi.string().valid("active", "inactive").required(),
   discount_percent: Joi.number(),
-  valid_from: Joi.date().format("YYYY/MM/DD").greater("now").required(),
+  valid_from: Joi.date().format("YYYY/MM/DD").required(),
   valid_till: Joi.date()
     .format("YYYY/MM/DD")
-    .greater(Joi.ref("valid_from"))
+    .min(Joi.ref("valid_from"))
     .required(),
+  // valid_from: Joi.date().format("YYYY/MM/DD").min("now").required(),
+  // valid_till: Joi.date()
+  //   .format("YYYY/MM/DD")
+  //   .min(Joi.ref("valid_from"))
+  //   .required(),
   terms_and_conditions: Joi.string(),
 });
 

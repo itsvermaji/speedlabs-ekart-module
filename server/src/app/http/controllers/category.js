@@ -87,13 +87,19 @@ exports.allCategories = (req, res) => {
   db.query(
     "SELECT * FROM categories WHERE created_by = ?",
     [req.user.id],
-    (err, data) => {
+    (err, rows) => {
       if (err) {
         res.json(err);
       }
 
-      // Institute Data is displayed after successfull registration.
-      return res.json(data);
+      if (rows.length < 1) {
+        return res
+          .status(200)
+          .json({ msg: "Sorry, currently there are no categories!" });
+      }
+
+      // Institute rows is displayed after successfull registration.
+      return res.json(rows);
     }
   );
 };

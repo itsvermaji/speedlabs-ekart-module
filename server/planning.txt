@@ -23,7 +23,19 @@ Admin:
 7. Discount amount cannot exceed the product_discounted price.
 8. Coupon can only be redeemed for once for particular user.
 9. After a successfull purchase the coupon code will be deleted!
+10. Coupon names should be unique for an institute.
 FILTER: for deleting expired coupons.
+
+COUPON REDEEM:
+1. Check if the quantity is greater than 0.
+2. Coupon Code matches.
+3. Course belongs to the registered institute.
+4. Label is active.
+5. Not expired.
+
+6.If product is removed from the cart then first the coupon quantity is restored.
+
+A student redeems a coupon { product id is passed on which coupn is applied in url, first institute is verified, coupn code is also passed along with url, then quantity, label and expiry is checked, then the net price is reduced.}
 
 CART Logic:
 1. First check if the cart has been created for that user.
@@ -35,10 +47,3 @@ CART Logic:
     2.2. Then Go to point 1.2.
 3. After each add to cart operation check the total price.
 
-COUPON REDEEM:
-1. Check if the quantity is greater than 0.
-2. 
-
-
-TODO: Visualization using template engine(pug or ejs)
-admin side, student side, add to cart, payment gateway, coupon discount, access of purchased product.

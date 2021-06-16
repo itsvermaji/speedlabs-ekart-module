@@ -1,4 +1,5 @@
 const db = require("../../config/dbConnection");
+const { discountPrice } = require("../../helpers/coupon");
 
 exports.getCartItems = async (req, res) => {
   // const sql =
@@ -22,7 +23,15 @@ exports.getCartItems = async (req, res) => {
       return res.status(400).json({ msg: "An error occured!" });
     }
 
+    if (rows.length < 1) {
+      return res.status(400).json({
+        msg: "Your cart has not been initialized, please contact your admin!",
+      });
+    }
+
     // Make Cart_Items object to display all the cart Information!
+
+    console.log("rows", rows);
     cart_id = rows[0].id;
     cartItems = rows[0];
 
@@ -39,6 +48,7 @@ exports.getCartItems = async (req, res) => {
 
         cartItems.Items = rows;
         console.log(cartItems);
+
         return res.status(200).json(cartItems);
       }
     );
@@ -54,7 +64,8 @@ exports.addItemToCart = (req, res) => {
   const { product_id, coupon_code } = req.body;
   var total_amt = 0,
     net_product_price = 0,
-    product_price;
+    product_price = 0,
+    initial_discount = 0;
 
   db.query(
     "SELECT * FROM user_carts WHERE user_id = ?",
@@ -97,6 +108,7 @@ exports.addItemToCart = (req, res) => {
 
         // Getting the product price!
         product_price = rows[0].price;
+        initial_discount = rows[0].discount;
 
         // Check if the product is already in the cart.
         db.query(
@@ -118,14 +130,16 @@ exports.addItemToCart = (req, res) => {
             }
 
             // Getting net product price!
-            net_product_price = product_price;
+            // net_product_price = product_price;
+            net_product_price = discountPrice(product_price, initial_discount);
+            // console.log(net_product_price);
             console.log("You can add product to the cart!");
 
             // Now we need to insert that product to cart contents.
             const cartContent = {
               cart_id,
               product_id,
-              net_price: product_price,
+              net_price: net_product_price,
             };
 
             db.query(
@@ -252,14 +266,6 @@ exports.removeItemFromCart = (req, res) => {
       console.log(rows);
     }
   );
-};
-
-exports.applyCoupon = (req, res) => {
-  return res.status(200).json({ msg: "Apply Coupon Code?" });
-};
-
-exports.removeCoupon = (req, res) => {
-  return res.status(200).json({ msg: "Coupon Removed?" });
 };
 
 exports.emptyCart = (req, res) => {
