@@ -77,7 +77,9 @@ We used following technologies and frameworks for the development of this module
 
 Deepak Verma - [@linkedin](https://www.linkedin.com/in/deepak-verma-6a5083189/) - deepakverma.pb34@gmail.com - 2018ucp1173@mnit.ac.in
 
-## Frontend and Designing
+---
+
+### Frontend and Designing
 
 Raghav Ranjan - [@linkedin](https://www.linkedin.com/in/raghav-ranjan-827837190/)
 
