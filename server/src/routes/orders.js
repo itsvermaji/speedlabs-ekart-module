@@ -9,6 +9,6 @@ const router = express.Router();
 router.get("/", verifyUser, orders);
 
 // All Admin Products
-router.get("/details", verifyUser, orderDetails);
+router.get("/:id/details", verifyUser, orderDetails);
 
-exports.productRoutes = router;
+exports.orderRoutes = router;

@@ -29,42 +29,45 @@ module.exports.validateCoupon = (joiSchema) => {
           if (err) {
             console.log(err);
             return res
-              .status(400)
-              .json({ msg: "An internal server error occured!" });
+              .status(200)
+              .json({ flag: 2, msg: "An internal server error occured!" });
           }
 
           if (results == 0) {
-            return res
-              .status(400)
-              .json({ msg: "You can't create coupon for this product!" });
+            return res.status(200).json({
+              flag: 2,
+              msg: "You can't create coupon for this product!",
+            });
           }
+          next();
 
-          db.query(
-            "SELECT coupon_code FROM coupons WHERE coupon_code = ? AND institute_id = ?",
-            [data.coupon_code, req.user.id],
-            (err, rows) => {
-              if (err) {
-                console.log(err);
-                return res
-                  .status(400)
-                  .json({ msg: "An internal server error occured!" });
-              }
+          // db.query(
+          //   "SELECT coupon_code FROM coupons WHERE coupon_code = ? AND institute_id = ?",
+          //   [data.coupon_code, req.user.id],
+          //   (err, rows) => {
+          //     if (err) {
+          //       console.log(err);
+          //       return res
+          //         .status(200)
+          //         .json({ flag: 2, msg: "An internal server error occured!" });
+          //     }
 
-              if (rows.length > 0) {
-                return res.status(400).json({
-                  msg: "A coupon by this name already exists, please try different name!",
-                });
-              }
+          //     if (rows.length > 0) {
+          //       return res.status(200).json({
+          //         flag: 2,
+          //         msg: "A coupon by this name already exists, please try different name!",
+          //       });
+          //     }
 
-              console.log(data);
-              next();
-            }
-          );
+          //     console.log(data);
+          //   }
+          // );
         }
       );
     } else {
       console.log(error);
-      return res.status(400).json({
+      return res.status(200).json({
+        flag: 2,
         msg: "Error occured while validating the coupon!",
         error,
       });

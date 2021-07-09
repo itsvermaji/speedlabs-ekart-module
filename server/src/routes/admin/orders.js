@@ -1,26 +1,16 @@
 const express = require("express");
+const { orders, orderDetails } = require("../../app/http/controllers/orders");
+const {
+  verifyInstitute,
+} = require("../../app/http/middlewares/verifyInstitute");
 const router = express.Router();
 
 // !Products Route
 
-// Student Routes
-
-// Admin Marketplace
-router.get("/marketplace", adminMarketplaceRoute);
+// Order
+router.get("/", verifyInstitute, orders);
 
 // All Admin Products
-router.get("/myproducts", verifyInstitute, newProducts);
+router.get("/:id/details", verifyInstitute, orderDetails);
 
-// ?Create Product
-router.post("/createproduct", verifyInstitute, createProduct);
-
-// ?Product Details
-router.get("/:id", verifyInstitute, productDetails);
-
-// ?Update Product
-router.put("/:id/update", verifyInstitute, productUpdate);
-
-// ?Delete Product
-router.delete("/:id/delete", verifyInstitute, deleteProduct);
-
-exports.productRoutes = router;
+exports.adminOrderRoutes = router;

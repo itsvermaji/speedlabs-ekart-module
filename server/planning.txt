@@ -1,3 +1,60 @@
+Changes:
+Admin - https://www.getpostman.com/collections/43d1b1712d274aa1b2c6
+Users - https://www.getpostman.com/collections/70ad9a9ead6e5e0fb822
+
+Updated collections
+Admin/orders
+Users/orders
+Users/Cart/Razorpay
+Users/Cart/checkout
+Users/Products/Purchased Products
+
+Achieved Goals:
+1. successfull Payment using .env secret
+2. Orders History user and admin both sides.
+3. Access to purchased product.
+
+Changes:
+1. Free/Paid attribute added to the content.
+2. Marketplace, Categories route for user side.
+3. All Categories route, All products, Products details can be viewd without Auth for user/admin both.
+Pending:
+1. Payment verification using .env secret and order_id.
+
+
+Changes: 
+1. Applied coupon on a cart item is now stored as coupon_id instead of coupon_code which will prove advantageous in case of updating coupon name.
+2. tot_coupons_used Field added to the database table and made functional.
+3. price_before_coupon filed added into the cart_contents table.
+4. Status codes of all the responses of 80+ responses added.
+5. Update coupon api Fixed.
+6. "cart_content, user_carts" product_prices changed to decimal(8, 2).
+7. 2 student details apis added and 3 left
+8. Shared Marketplace removed from student side, only products from joined institute are visible.
+
+1. rating_and total_ratings removed from the front end.
+3. categories logic needs to be improved.
+
+TODO: 
+2. create api for sales/orders (both admin and user side) and payment.
+4. work on content type (test and live class).
+5. Student api.
+
+TODO:
+1. add Content Type field in products.
+2. Make categories open for admin, users.
+
+
+Orders Database Table: 
+order_id, invoice_number, user_id, published_by, product_id, coupon id, order_status(active, pending, processed),  method_of_payment, from_bank_ac, to_bank_ac, net price, Date.
+
+Order Details Response: 
+user_name, student_institute_name, course_name, published_by, coupon applied, net price, Date, all transaction details (method_of_payment, which bank to which bank)
+order_status: active, pending, processed, Date.
+
+PRODUCT_CONTENT:
+id, product_id, section_name, video_name, video_url, rating, created_at.
+
 Points to Remember
 1. Check for the keywords in package.json.
 2. Right now the tot_students attribute in product section is filled by admin, later on it will be dynamically handled.
@@ -47,3 +104,5 @@ CART Logic:
     2.2. Then Go to point 1.2.
 3. After each add to cart operation check the total price.
 
+Order details:
+1. Only That product can be ordered if it is not in the Orders history.

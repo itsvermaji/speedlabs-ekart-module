@@ -4,11 +4,22 @@ const {
   getCartItems,
   emptyCart,
   removeItemFromCart,
+  checkout,
 } = require("../app/http/controllers/cart");
+const { payment } = require("../app/http/controllers/payment");
+
 const { applyCoupon, removeCoupon } = require("../app/http/controllers/coupon");
 const router = express.Router();
 
 const { verifyUser } = require("../app/http/middlewares/verifyUser");
+
+// ? Head towards checkout page.
+
+// ? Payment Gateway
+router.get("/razorpay", verifyUser, payment);
+
+// ? Checkout page
+router.post("/checkout", verifyUser, checkout);
 
 // ? Get Cart Items
 router.get("/", verifyUser, getCartItems);
@@ -28,5 +39,4 @@ router.post("/addtocart", verifyUser, addItemToCart);
 // ? Empty the Cart category
 router.delete("/emptycart", verifyUser, emptyCart);
 
-// ? Apply coupon to the cart item
 module.exports = router;

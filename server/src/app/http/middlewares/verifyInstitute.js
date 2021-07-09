@@ -6,12 +6,17 @@ exports.verifyInstitute = (req, res, next) => {
 
     if (!token) {
       console.log("User is not Authorized!");
-      return res.status(400).json({ msg: "User not authorized!" });
+      return res.status(200).json({ flag: 2, msg: "User not authorized!" });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
+    console.log(req.user);
     console.log(`${req.user.id} user verified`);
+
+    if (req.user.role !== "admin") {
+      return res.status(200).json({ flag: 2, msg: "You are not an admin!" });
+    }
 
     next();
   } catch (err) {

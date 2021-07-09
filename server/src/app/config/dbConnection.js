@@ -7,13 +7,20 @@ const db = mysql.createConnection({
   password: process.env.DATABASE_PASSWORD,
 });
 
-db.connect((err) => {
-  if (err) {
-    console.error("error connecting: " + err.stack);
-    return;
-  }
+try {
+  db.connect((err) => {
+    if (err) {
+      console.error("error connecting: " + err.stack);
+      return;
+    }
 
-  console.log("Database connection successfull!");
-});
+    console.log("Database connection successfull!");
+  });
+} catch (error) {
+  console.log(error);
+  return res
+    .status(200)
+    .json({ flag: 2, msg: "Catch: An error occured, please try again!" });
+}
 
 module.exports = db;

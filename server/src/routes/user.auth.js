@@ -4,9 +4,10 @@ const router = express.Router();
 const userAuth = require("../app/http/controllers/userAuth");
 
 // Students
-router.post("/register", userAuth.postRegister);
+// Register
+router.post("/register", userAuth.studentRegistration);
 
-router.get("/login", userAuth.login);
-router.post("/login", userAuth.postLogin);
+// Login
+router.post("/login", userAuth.studentLogin);
 
 module.exports.userAuth = router;
