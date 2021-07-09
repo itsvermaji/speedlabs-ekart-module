@@ -79,7 +79,10 @@ Deepak Verma - [@linkedin](https://www.linkedin.com/in/deepak-verma-6a5083189/) 
 
 ## Frontend and Designing
 
+Raghav Ranjan - [@linkedin](https://www.linkedin.com/in/raghav-ranjan-827837190/)
+
+Himani Gulati - [@linkedin](https://www.linkedin.com/in/himani-gulati01/)
+
 <h3 align="center">Project Link</h3>
-[@Raghav Ranjan](https://www.linkedin.com/in/raghav-ranjan-827837190/), [@Himani Gulati](https://www.linkedin.com/in/himani-gulati01/)
 
  <p align="center"><a href="https://github.com/himanigulati01/speedLabs">https://github.com/himanigulati01/speedLabs</a></p>
